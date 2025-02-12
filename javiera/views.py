@@ -1,7 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from django.core.files.storage import default_storage
+from django.db.models import Q
 
 from javiera.models import Artigo
 from javiera.serializers import ArtigoSerializer
@@ -11,6 +13,17 @@ from javiera.serializers import ArtigoSerializer
 class ArtigoViewSet(viewsets.ModelViewSet):
     queryset = Artigo.objects.all()
     serializer_class = ArtigoSerializer
+    pagination_class = PageNumberPagination
+    PageNumberPagination.page_size = 10
+
+    def get_queryset(self):
+        queryset = Artigo.objects.all()
+        query = self.request.query_params.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(titulo__icontains=query) | Q(descricao__icontains=query)
+            )
+        return queryset
 
 # Views para upload de imagens e PDFs dos artigos (blog)
 
