@@ -14,7 +14,7 @@ class ArtigoViewSet(viewsets.ModelViewSet):
     queryset = Artigo.objects.all()
     serializer_class = ArtigoSerializer
     pagination_class = PageNumberPagination
-    PageNumberPagination.page_size = 10
+    PageNumberPagination.page_size = 8
 
     def get_queryset(self):
         queryset = Artigo.objects.all()
@@ -23,6 +23,10 @@ class ArtigoViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(
                 Q(titulo__icontains=query) | Q(descricao__icontains=query)
             )
+
+        # Aplica a lógica de ordenação:
+        queryset = queryset.order_by('-fixado', '-data_criacao')
+
         return queryset
 
 # Views para upload de imagens e PDFs dos artigos (blog)
