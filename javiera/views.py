@@ -1,12 +1,14 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from django.core.files.storage import default_storage
 from django.db.models import Q
+import os
+from dotenv import load_dotenv
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, From
 
 from javiera.models import Artigo
-from javiera.serializers import ArtigoSerializer
+from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer
 
 # Views para os modelos
 
@@ -29,26 +31,42 @@ class ArtigoViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-# Views para upload de imagens e PDFs dos artigos (blog)
+# Views para Formulário de Contato (enviar email com sendgrid)
 
-class UploadImageView(APIView):
-    def post(self, request, *args, **kwargs):
-        imagem = request.FILES.get('imagem')
-        if not imagem:
-            return Response({'error': 'Nenhuma imagem enviada.'}, status=status.HTTP_400_BAD_REQUEST)
+load_dotenv()
 
-        nome_arquivo = default_storage.save(f'javiera/blog/imagens/{imagem.name}', imagem)
-        url_imagem = default_storage.url(nome_arquivo)
+class FormularioContatoViewSet(viewsets.ViewSet):
+    serializer_class = FormularioContatoSerializer
 
-        return Response({'url': url_imagem}, status=status.HTTP_201_CREATED)
-    
-class UploadPDFView(APIView):
-    def post(self, request, *args, **kwargs):
-        pdf_file = request.FILES.get('pdf_file')
-        if not pdf_file:
-            return Response({'error': 'Nenhum arquivo PDF enviado.'}, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            nome = serializer.validated_data['nome']
+            email_remetente = serializer.validated_data['email']
+            mensagem = serializer.validated_data['mensagem']
 
-        nome_arquivo = default_storage.save(f'javiera/blog/pdfs/{pdf_file.name}', pdf_file)
-        url_pdf = default_storage.url(nome_arquivo)
+            assunto = f"Novo email recebido pelo site"
+            mensagem_email = f'<p>Olá, Antonia! Um novo email foi recebido através do seu site:</p><br><p><strong>Nome:</strong> {nome}</p><p><strong>Email:</strong> {email_remetente}</p><p><strong>Mensagem:</strong> {mensagem}</p><br><p>Importante: Não responda diretamente através deste email, e sim inicie uma nova conversa endereçada ao destinatário.</p>'
+            email_destino = ['moraismariana200@gmail.com']
 
-        return Response({'url': url_pdf}, status=status.HTTP_201_CREATED)
+            email_sendgrid = Mail(
+                from_email = From('no-reply@moraismariana.com', 'Site Antonia Javiera'),
+                to_emails = email_destino,
+                subject = assunto,
+                html_content = mensagem_email
+            )
+
+            try:
+                api_key = os.environ.get('SENDGRID_API_KEY')
+                print(f"API Key lida do ambiente: {api_key}")
+                sg = SendGridAPIClient(api_key)
+                response = sg.send(email_sendgrid)
+                if response.status_code == 202:
+                    return Response({'mensagem': 'Email enviado com sucesso!'}, status = status.HTTP_200_OK)
+                else:
+                    return Response({'mensagem': 'Erro ao enviar o email.', 'erro': f"SendGrid Status Code: {response.status_code}, Body: {response.body}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except Exception as e:
+                return Response({'mensagem': 'Erro ao enviar o email.', 'erro': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
