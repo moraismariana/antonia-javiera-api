@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, From
 
-from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto
+from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, ComponenteContato
 
-from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, InicioTextoSerializer, InicioImgSerializer, InicioBgSerializer, SobreTextoSerializer, SobreImgSerializer, ComponenteArtigosTextoSerializer, ComponenteContatoTextoSerializer
+from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, InicioTextoSerializer, InicioImgSerializer, InicioBgSerializer, SobreTextoSerializer, SobreImgSerializer, ComponenteArtigosTextoSerializer, ComponenteContatoTextoSerializer, PaginaInicioSerializer, ComponenteContatoSerializer
 
 # Views para os modelos
 
@@ -101,3 +101,11 @@ class ComponenteArtigosTextoViewSet(viewsets.ModelViewSet):
 class ComponenteContatoTextoViewSet(viewsets.ModelViewSet):
     queryset = ComponenteContatoTexto.objects.all()
     serializer_class = ComponenteContatoTextoSerializer
+
+class PaginaInicioViewSet(viewsets.ModelViewSet):
+    queryset = PaginaInicio.objects.all()
+    serializer_class = PaginaInicioSerializer
+
+class ComponenteContatoViewSet(viewsets.ModelViewSet):
+    queryset = ComponenteContato.objects.all()
+    serializer_class = ComponenteContatoSerializer

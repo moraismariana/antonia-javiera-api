@@ -59,3 +59,20 @@ class ComponenteArtigosTexto(SingletonModel):
 class ComponenteContatoTexto(SingletonModel):
     contato_titulo = models.TextField()
     contato_descricao = models.TextField()
+
+# Modelo de teste por enquanto (as acima não foram utilizadas):
+
+class PaginaInicio(DeleteOldImageMixin, SingletonModel):
+    introducaoTitulo = models.TextField()
+    introducaoSubtitulo = models.TextField()
+    sobreTitulo = models.TextField()
+    sobreDescricao = models.TextField()
+    artigosTitulo = models.TextField()
+    artigosDescricao = models.TextField()
+    imagem1 = models.ImageField(upload_to='javiera/cms/inicio', null=True, blank=True)
+    bg1 = models.ImageField(upload_to='javiera/cms/inicio', null=True, blank=True)
+    bg2 = models.ImageField(upload_to='javiera/cms/inicio', null=True, blank=True)
+
+class ComponenteContato(SingletonModel):
+    contatoTitulo = models.TextField()
+    contatoDescricao = models.TextField()
