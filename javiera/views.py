@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, From
 
-from javiera.models import Artigo
-from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer
+from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto
+
+from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, InicioTextoSerializer, InicioImgSerializer, InicioBgSerializer, SobreTextoSerializer, SobreImgSerializer, ComponenteArtigosTextoSerializer, ComponenteContatoTextoSerializer
 
 # Views para os modelos
 
@@ -31,7 +32,7 @@ class ArtigoViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-# Views para Formulário de Contato (enviar email com sendgrid)
+# View para Formulário de Contato (enviar email com sendgrid)
 
 load_dotenv()
 
@@ -70,3 +71,33 @@ class FormularioContatoViewSet(viewsets.ViewSet):
             
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Views para CMS
+
+class InicioTextoViewSet(viewsets.ModelViewSet):
+    queryset = InicioTexto.objects.all()
+    serializer_class = InicioTextoSerializer
+
+class InicioImgViewSet(viewsets.ModelViewSet):
+    queryset = InicioImg.objects.all()
+    serializer_class = InicioImgSerializer
+
+class InicioBgViewSet(viewsets.ModelViewSet):
+    queryset = InicioBg.objects.all()
+    serializer_class = InicioBgSerializer
+
+class SobreTextoViewSet(viewsets.ModelViewSet):
+    queryset = SobreTexto.objects.all()
+    serializer_class = SobreTextoSerializer
+
+class SobreImgViewSet(viewsets.ModelViewSet):
+    queryset = SobreImg.objects.all()
+    serializer_class = SobreImgSerializer
+
+class ComponenteArtigosTextoViewSet(viewsets.ModelViewSet):
+    queryset = ComponenteArtigosTexto.objects.all()
+    serializer_class = ComponenteArtigosTextoSerializer
+
+class ComponenteContatoTextoViewSet(viewsets.ModelViewSet):
+    queryset = ComponenteContatoTexto.objects.all()
+    serializer_class = ComponenteContatoTextoSerializer
