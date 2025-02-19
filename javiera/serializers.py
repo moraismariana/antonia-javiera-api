@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, ComponenteContato
+from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, PaginaSobre,ComponenteContato
 
 class ArtigoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,6 +52,11 @@ class ComponenteContatoTextoSerializer(serializers.ModelSerializer):
 class PaginaInicioSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaginaInicio
+        fields = "__all__"
+
+class PaginaSobreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaginaSobre
         fields = "__all__"
 
 class ComponenteContatoSerializer(serializers.ModelSerializer):

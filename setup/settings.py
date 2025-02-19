@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
     'javiera.apps.JavieraConfig',
 ]
 
@@ -140,3 +141,21 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8080',
     'https://moraismariana.github.io',
 ]
+
+# JWT AUTHENTICATION
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),  # Ajuste o tempo de expiração conforme necessário
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}

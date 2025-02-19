@@ -1,4 +1,6 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
@@ -7,9 +9,33 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, From
 
-from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, ComponenteContato
+from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, PaginaSobre, ComponenteContato
 
-from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, InicioTextoSerializer, InicioImgSerializer, InicioBgSerializer, SobreTextoSerializer, SobreImgSerializer, ComponenteArtigosTextoSerializer, ComponenteContatoTextoSerializer, PaginaInicioSerializer, ComponenteContatoSerializer
+from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, InicioTextoSerializer, InicioImgSerializer, InicioBgSerializer, SobreTextoSerializer, SobreImgSerializer, ComponenteArtigosTextoSerializer, ComponenteContatoTextoSerializer, PaginaInicioSerializer, PaginaSobreSerializer, ComponenteContatoSerializer
+
+class PermissaoJaviera(permissions.BasePermission):
+    """
+    Permissão personalizada para verificar se o usuário faz parte do grupo de editores.
+    """
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # Verifica se o usuário está no grupo 'Admin Javiera'
+        return request.user.groups.filter(name='Admin Javiera').exists()
+    
+# View para verificar grupo ao qual o usuário pertence
+# (Para garantir que pessoas não autorizadas acessem as rotas de admin)
+
+class UserDetailsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        groups = [group.name for group in user.groups.all()]
+        return Response({
+            'username': user.username,
+            'groups': groups,
+        })
 
 # Views para os modelos
 
@@ -18,6 +44,7 @@ class ArtigoViewSet(viewsets.ModelViewSet):
     serializer_class = ArtigoSerializer
     pagination_class = PageNumberPagination
     PageNumberPagination.page_size = 8
+    permission_classes = [IsAuthenticatedOrReadOnly, PermissaoJaviera]
 
     def get_queryset(self):
         queryset = Artigo.objects.all()
@@ -105,7 +132,14 @@ class ComponenteContatoTextoViewSet(viewsets.ModelViewSet):
 class PaginaInicioViewSet(viewsets.ModelViewSet):
     queryset = PaginaInicio.objects.all()
     serializer_class = PaginaInicioSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, PermissaoJaviera]
+
+class PaginaSobreViewSet(viewsets.ModelViewSet):
+    queryset = PaginaSobre.objects.all()
+    serializer_class = PaginaSobreSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, PermissaoJaviera]
 
 class ComponenteContatoViewSet(viewsets.ModelViewSet):
     queryset = ComponenteContato.objects.all()
     serializer_class = ComponenteContatoSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, PermissaoJaviera]

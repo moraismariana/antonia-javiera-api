@@ -73,6 +73,13 @@ class PaginaInicio(DeleteOldImageMixin, SingletonModel):
     bg1 = models.ImageField(upload_to='javiera/cms/inicio', null=True, blank=True)
     bg2 = models.ImageField(upload_to='javiera/cms/inicio', null=True, blank=True)
 
+class PaginaSobre(DeleteOldImageMixin, SingletonModel):
+    titulo = models.TextField()
+    paragrafo1 = models.TextField()
+    paragrafo2 = models.TextField()
+    imagem1 = models.ImageField(upload_to='javiera/cms/sobre', null=True, blank=True)
+    imagem2 = models.ImageField(upload_to='javiera/cms/sobre', null=True, blank=True)
+
 class ComponenteContato(SingletonModel):
     contatoTitulo = models.TextField()
     contatoDescricao = models.TextField()
