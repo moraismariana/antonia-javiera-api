@@ -151,6 +151,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'setup.throttles.LimitacaoPorIP',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon_ip': '120/minute',
+    }
 }
 
 from datetime import timedelta

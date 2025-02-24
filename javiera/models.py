@@ -30,36 +30,6 @@ class SingletonModel(models.Model):
             raise ValidationError(f"Já existe uma instância de {self.__class__.__name__}.")
         super().save(*args, **kwargs)
 
-class InicioTexto(SingletonModel):
-    introducao_titulo = models.TextField()
-    introducao_subtitulo = models.TextField()
-    sobre_titulo = models.TextField()
-    sobre_descricao = models.TextField()
-
-class InicioImg(DeleteOldImageMixin, SingletonModel):
-    sobre = models.ImageField(upload_to='javiera/cms/inicio')
-
-class InicioBg(DeleteOldImageMixin, SingletonModel):
-    introducao = models.ImageField(upload_to='javiera/cms/inicio')
-    artigos = models.ImageField(upload_to='javiera/cms/inicio')
-
-class SobreTexto(SingletonModel):
-    titulo = models.TextField()
-    paragrafo_1 = models.TextField()
-    paragrafo_2 = models.TextField()
-
-class SobreImg(DeleteOldImageMixin, SingletonModel):
-    imagem_1 = models.ImageField(upload_to='javiera/cms/sobre')
-    imagem_2 = models.ImageField(upload_to='javiera/cms/sobre')
-
-class ComponenteArtigosTexto(SingletonModel):
-    artigos_titulo = models.TextField()
-    artigos_descricao = models.TextField()
-
-class ComponenteContatoTexto(SingletonModel):
-    contato_titulo = models.TextField()
-    contato_descricao = models.TextField()
-
 # Modelo de teste por enquanto (as acima não foram utilizadas):
 
 class PaginaInicio(DeleteOldImageMixin, SingletonModel):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, PaginaSobre,ComponenteContato
+from javiera.models import Artigo, PaginaInicio, PaginaSobre,ComponenteContato
 
 class ArtigoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,43 +11,7 @@ class FormularioContatoSerializer(serializers.Serializer):
     email = serializers.EmailField()
     mensagem = serializers.CharField()
 
-
 # Serializers CMS
-
-class InicioTextoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = InicioTexto
-        fields = "__all__"
-
-class InicioImgSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = InicioImg
-        fields = "__all__"
-
-class InicioBgSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = InicioBg
-        fields = "__all__"
-
-class SobreTextoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SobreTexto
-        fields = "__all__"
-
-class SobreImgSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SobreImg
-        fields = "__all__"
-
-class ComponenteArtigosTextoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComponenteArtigosTexto
-        fields = "__all__"
-
-class ComponenteContatoTextoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComponenteContatoTexto
-        fields = "__all__"
 
 class PaginaInicioSerializer(serializers.ModelSerializer):
     class Meta:

@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, From
 
-from javiera.models import Artigo, InicioTexto, InicioImg, InicioBg, SobreTexto, SobreImg, ComponenteArtigosTexto, ComponenteContatoTexto, PaginaInicio, PaginaSobre, ComponenteContato
+from javiera.models import Artigo, PaginaInicio, PaginaSobre, ComponenteContato
 
-from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, InicioTextoSerializer, InicioImgSerializer, InicioBgSerializer, SobreTextoSerializer, SobreImgSerializer, ComponenteArtigosTextoSerializer, ComponenteContatoTextoSerializer, PaginaInicioSerializer, PaginaSobreSerializer, ComponenteContatoSerializer
+from javiera.serializers import ArtigoSerializer, FormularioContatoSerializer, PaginaInicioSerializer, PaginaSobreSerializer, ComponenteContatoSerializer
 
 class PermissaoJaviera(permissions.BasePermission):
     """
@@ -100,34 +100,6 @@ class FormularioContatoViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Views para CMS
-
-class InicioTextoViewSet(viewsets.ModelViewSet):
-    queryset = InicioTexto.objects.all()
-    serializer_class = InicioTextoSerializer
-
-class InicioImgViewSet(viewsets.ModelViewSet):
-    queryset = InicioImg.objects.all()
-    serializer_class = InicioImgSerializer
-
-class InicioBgViewSet(viewsets.ModelViewSet):
-    queryset = InicioBg.objects.all()
-    serializer_class = InicioBgSerializer
-
-class SobreTextoViewSet(viewsets.ModelViewSet):
-    queryset = SobreTexto.objects.all()
-    serializer_class = SobreTextoSerializer
-
-class SobreImgViewSet(viewsets.ModelViewSet):
-    queryset = SobreImg.objects.all()
-    serializer_class = SobreImgSerializer
-
-class ComponenteArtigosTextoViewSet(viewsets.ModelViewSet):
-    queryset = ComponenteArtigosTexto.objects.all()
-    serializer_class = ComponenteArtigosTextoSerializer
-
-class ComponenteContatoTextoViewSet(viewsets.ModelViewSet):
-    queryset = ComponenteContatoTexto.objects.all()
-    serializer_class = ComponenteContatoTextoSerializer
 
 class PaginaInicioViewSet(viewsets.ModelViewSet):
     queryset = PaginaInicio.objects.all()
