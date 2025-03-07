@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path, os
 from dotenv import load_dotenv
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://morais-clientes-1-0041128034d5.herokuapp.com/']
 
 
 # Application definition
@@ -166,3 +167,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),  # Ajuste o tempo de expiração conforme necessário
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+# Configurações Heroku
+
+django_heroku.settings(locals())
