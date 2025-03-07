@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
@@ -65,6 +65,7 @@ load_dotenv()
 
 class FormularioContatoViewSet(viewsets.ViewSet):
     serializer_class = FormularioContatoSerializer
+    permission_classes = [AllowAny]
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -75,7 +76,7 @@ class FormularioContatoViewSet(viewsets.ViewSet):
 
             assunto = f"Novo email recebido pelo site"
             mensagem_email = f'<p>Olá, Antonia! Um novo email foi recebido através do seu site:</p><br><p><strong>Nome:</strong> {nome}</p><p><strong>Email:</strong> {email_remetente}</p><p><strong>Mensagem:</strong> {mensagem}</p><br><p>Importante: Não responda diretamente através deste email, e sim inicie uma nova conversa endereçada ao destinatário.</p>'
-            email_destino = ['moraismariana200@gmail.com']
+            email_destino = ['professoraantonia@gmail.com']
 
             email_sendgrid = Mail(
                 from_email = From('no-reply@moraismariana.com', 'Site Antonia Javiera'),
