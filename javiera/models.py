@@ -32,7 +32,7 @@ class SingletonModel(models.Model):
 
 # Modelo de teste por enquanto (as acima não foram utilizadas):
 
-class PaginaInicio(DeleteOldImageMixin, SingletonModel):
+class PaginaInicio(SingletonModel):
     introducaoTitulo = models.TextField()
     introducaoSubtitulo = models.TextField()
     sobreTitulo = models.TextField()
