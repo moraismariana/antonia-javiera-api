@@ -28,7 +28,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://morais-clientes-01-2b7511eff9ef.herokuapp.com/']
 
 
 # Application definition
@@ -175,35 +175,11 @@ SIMPLE_JWT = {
 
 # Configurações AWS S3
 
-# Configurações para arquivos MEDIA (uploads de usuários)
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_STORAGE_BUCKET_NAME = 'morais-clientes-1'
-# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-# AWS_S3_REGION_NAME = 'us-east-2'
-# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
-# AWS_LOCATION = 'media'
-
-# AWS_S3_SIGNATURE_VERSION = 's3v4'
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None
-# AWS_S3_VERIFY = True
-
-# URL pública para os arquivos media no S3
-# MEDIA_ROOT = 'media'
-
-# print(AWS_ACCESS_KEY_ID)
-# print(AWS_SECRET_ACCESS_KEY)
-
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'morais-teste-django'
-# AWS_S3_SIGNATURE_NAME = 's3v4'
+AWS_STORAGE_BUCKET_NAME = 'morais-clientes-01'
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_S3_FILE_OVERWRITE = False
-# AWS_S3_VERITY = True
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 AWS_DEFAULT_ACL = None
 
@@ -220,4 +196,4 @@ STORAGES = {
 
 # Configurações Heroku
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
