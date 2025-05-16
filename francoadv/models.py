@@ -86,7 +86,7 @@ class PaginaServicos(DeleteOldImageMixin, SingletonModel):
     tratamentoTitulo = models.TextField()
     tratamentoSubtitulo = models.TextField()
     tratamentoTexto = models.TextField()
-    bg = models.ImageField(upload_to='francoadv/cms/servicos', null=True, blank=True)
+    bg1 = models.ImageField(upload_to='francoadv/cms/servicos', null=True, blank=True)
 
 class ComponenteInsta(SingletonModel):
     instaTitulo = models.TextField()
@@ -101,4 +101,4 @@ class ComponenteContato(SingletonModel):
 
 class ComponenteCTA(DeleteOldImageMixin, SingletonModel):
     ctaTitulo = models.TextField()
-    bg = models.ImageField(upload_to='francoadv/cms/cta', null=True, blank=True)
+    bg1 = models.ImageField(upload_to='francoadv/cms/cta', null=True, blank=True)
