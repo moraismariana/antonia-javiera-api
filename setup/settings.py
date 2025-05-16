@@ -151,6 +151,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://moraismariana.github.io',
     'https://antoniacabrera.com.br',
     'https://advocaciafranco.adv.br',
+    'https://advocaciafranco.netlify.app',
 ]
 
 # JWT AUTHENTICATION
