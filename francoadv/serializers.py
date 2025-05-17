@@ -2,6 +2,8 @@ from rest_framework import serializers
 from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA
 # from javiera.models import Artigo, PaginaInicio, PaginaSobre,ComponenteContato
 
+
+# CMS
 class PaginaInicioSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaginaInicio
@@ -31,3 +33,10 @@ class ComponenteCTASerializer(serializers.ModelSerializer):
     class Meta:
         model = ComponenteCTA
         fields = '__all__'
+
+# Formulário Contato
+class FormularioContatoSerializer(serializers.Serializer):
+    nome = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    telefone = serializers.CharField(max_length=20)
+    mensagem = serializers.CharField()
