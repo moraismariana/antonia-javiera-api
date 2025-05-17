@@ -46,6 +46,7 @@ class ComponenteCTAViewSet(viewsets.ModelViewSet):
 class ServicoViewSet(viewsets.ModelViewSet):
     queryset = Servico.objects.all()
     serializer_class = ServicoSerializer
+    ordering = ['id']
     permission_classes = [AllowAny]
 
 # Formulário contato
