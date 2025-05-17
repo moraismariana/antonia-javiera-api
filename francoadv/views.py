@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status, serializers
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
@@ -8,9 +8,9 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 
-from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA
+from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico
 
-from francoadv.serializers import PaginaInicioSerializer, PaginaSobreSerializer, PaginaServicosSerializer, ComponenteInstaSerializer, ComponenteContatoSerializer, ComponenteCTASerializer, FormularioContatoSerializer
+from francoadv.serializers import PaginaInicioSerializer, PaginaSobreSerializer, PaginaServicosSerializer, ComponenteInstaSerializer, ComponenteContatoSerializer, ComponenteCTASerializer, ServicoSerializer, FormularioContatoSerializer
 
 # CMS
 class PaginaInicioViewSet(viewsets.ModelViewSet):
@@ -41,6 +41,11 @@ class ComponenteContatoViewSet(viewsets.ModelViewSet):
 class ComponenteCTAViewSet(viewsets.ModelViewSet):
     queryset = ComponenteCTA.objects.all()
     serializer_class = ComponenteCTASerializer
+    permission_classes = [AllowAny]
+
+class ServicoViewSet(viewsets.ModelViewSet):
+    queryset = Servico.objects.all()
+    serializer_class = ServicoSerializer
     permission_classes = [AllowAny]
 
 # Formulário contato

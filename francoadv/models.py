@@ -102,3 +102,9 @@ class ComponenteContato(SingletonModel):
 class ComponenteCTA(DeleteOldImageMixin, SingletonModel):
     ctaTitulo = models.TextField()
     bg1 = models.ImageField(upload_to='francoadv/cms/cta', null=True, blank=True)
+
+# Objetos de serviços
+class Servico(DeleteOldImageMixin, models.Model):
+    titulo = models.TextField()
+    descricao = models.TextField()
+    imagem = models.ImageField(upload_to='francoadv/cms/servico', null=True, blank=True)

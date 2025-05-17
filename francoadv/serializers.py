@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA
-# from javiera.models import Artigo, PaginaInicio, PaginaSobre,ComponenteContato
+from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico
 
 
 # CMS
@@ -32,6 +31,11 @@ class ComponenteContatoSerializer(serializers.ModelSerializer):
 class ComponenteCTASerializer(serializers.ModelSerializer):
     class Meta:
         model = ComponenteCTA
+        fields = '__all__'
+
+class ServicoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Servico
         fields = '__all__'
 
 # Formulário Contato
