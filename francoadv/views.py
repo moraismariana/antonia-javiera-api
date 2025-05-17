@@ -66,7 +66,7 @@ class FormularioContatoViewSet(viewsets.ViewSet):
             ZOHO_EMAIL_PASSWORD = "No-reply1"
             NOME_REMETENTE_EMAIL = "Contato Site" # Nome que aparecerá no "De:"
 
-            EMAIL_DESTINO = "moraismariana200@gmail.com"
+            EMAIL_DESTINO = "clarissa@advocaciafranco.adv.br"
 
             assunto = "Advocacia Franco: Nova mensagem recebida através do site"
 
