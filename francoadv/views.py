@@ -1,6 +1,7 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 import smtplib
 import ssl
@@ -12,47 +13,74 @@ from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, Componen
 
 from francoadv.serializers import PaginaInicioSerializer, PaginaSobreSerializer, PaginaServicosSerializer, ComponenteInstaSerializer, ComponenteContatoSerializer, ComponenteCTASerializer, ServicoSerializer, FormularioContatoSerializer
 
+# Permissões
+class PermissaoFrancoadv(permissions.BasePermission):
+    """
+    Permissão personalizada para permitir leitura para qualquer um,
+    mas escrita apenas para usuários do grupo 'Admin FrancoAdv'.
+    """
+    message = "Você não tem permissão para realizar esta ação."
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        
+        if not request.user or not request.user.is_authenticated:
+            return False
+        return request.user.groups.filter(name='Admin FrancoAdv').exists()
+
+class UserDetailsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        groups = [group.name for group in user.groups.all()]
+        return Response({
+            'username': user.username,
+            'groups': groups,
+        })
+
 # CMS
 class PaginaInicioViewSet(viewsets.ModelViewSet):
     queryset = PaginaInicio.objects.all()
     serializer_class = PaginaInicioSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 class PaginaSobreViewSet(viewsets.ModelViewSet):
     queryset = PaginaSobre.objects.all()
     serializer_class = PaginaSobreSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 class PaginaServicosViewSet(viewsets.ModelViewSet):
     queryset = PaginaServicos.objects.all()
     serializer_class = PaginaServicosSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 class ComponenteInstaViewSet(viewsets.ModelViewSet):
     queryset = ComponenteInsta.objects.all()
     serializer_class = ComponenteInstaSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 class ComponenteContatoViewSet(viewsets.ModelViewSet):
     queryset = ComponenteContato.objects.all()
     serializer_class = ComponenteContatoSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 class ComponenteCTAViewSet(viewsets.ModelViewSet):
     queryset = ComponenteCTA.objects.all()
     serializer_class = ComponenteCTASerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 class ServicoViewSet(viewsets.ModelViewSet):
     queryset = Servico.objects.all()
     serializer_class = ServicoSerializer
     ordering = ['id']
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
 # Formulário contato
 class FormularioContatoViewSet(viewsets.ViewSet):
     serializer_class = FormularioContatoSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [PermissaoFrancoadv]
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
