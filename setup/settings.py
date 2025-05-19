@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://morais-clientes-01-2b7511eff9ef.herokuapp.com/']
 
@@ -142,12 +142,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://localhost:8080',
-    'http://127.0.0.1:8080',
+    # 'http://localhost:5500',
+    # 'http://127.0.0.1:5500',
+    # 'http://localhost:3000',
+    # 'http://127.0.0.1:3000',
+    # 'http://localhost:8080',
+    # 'http://127.0.0.1:8080',
     'https://moraismariana.github.io',
     'https://antoniacabrera.com.br',
     'https://advocaciafranco.adv.br',
