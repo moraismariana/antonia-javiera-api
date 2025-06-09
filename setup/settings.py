@@ -152,6 +152,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://antoniacabrera.com.br',
     'https://advocaciafranco.adv.br',
     'https://advocaciafranco.netlify.app',
+    'https://franco-teste.netlify.app/',
 ]
 
 # JWT AUTHENTICATION
