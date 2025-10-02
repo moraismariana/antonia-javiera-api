@@ -1,5 +1,5 @@
 from django.contrib import admin
-from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico
+from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico, Artigo
 
 class PaginaInicioAdmin(admin.ModelAdmin):
     list_display = ('id',)
@@ -29,6 +29,10 @@ class ServicoAdmin(admin.ModelAdmin):
     list_display = ('id',)
     list_display_links = ('id',)
 
+class ArtigoAdmin(admin.ModelAdmin):
+    list_display = ('id',)
+    list_display_links = ('id',)
+
 admin.site.register(PaginaInicio, PaginaInicioAdmin)
 admin.site.register(PaginaSobre, PaginaSobreAdmin)
 admin.site.register(PaginaServicos, PaginaServicosAdmin)
@@ -36,3 +40,4 @@ admin.site.register(ComponenteInsta, ComponenteInstaAdmin)
 admin.site.register(ComponenteContato, ComponenteContatoAdmin)
 admin.site.register(ComponenteCTA, ComponenteCTAAdmin)
 admin.site.register(Servico, ServicoAdmin)
+admin.site.register(Artigo, ArtigoAdmin)
