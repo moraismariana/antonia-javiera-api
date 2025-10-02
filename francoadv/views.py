@@ -1,7 +1,9 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
+from django.db.models import Q
 
 import smtplib
 import ssl
@@ -9,9 +11,9 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 
-from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico
+from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico, Artigo
 
-from francoadv.serializers import PaginaInicioSerializer, PaginaSobreSerializer, PaginaServicosSerializer, ComponenteInstaSerializer, ComponenteContatoSerializer, ComponenteCTASerializer, ServicoSerializer, FormularioContatoSerializer
+from francoadv.serializers import PaginaInicioSerializer, PaginaSobreSerializer, PaginaServicosSerializer, ComponenteInstaSerializer, ComponenteContatoSerializer, ComponenteCTASerializer, ServicoSerializer, FormularioContatoSerializer, ArtigoSerializer
 
 # Permissões
 class PermissaoFrancoadv(permissions.BasePermission):
@@ -39,6 +41,26 @@ class UserDetailsView(APIView):
             'username': user.username,
             'groups': groups,
         })
+    
+class ArtigoViewSet(viewsets.ModelViewSet):
+    queryset = Artigo.objects.all()
+    serializer_class = ArtigoSerializer
+    pagination_class = PageNumberPagination
+    PageNumberPagination.page_size = 10
+    permission_classes = [IsAuthenticatedOrReadOnly, PermissaoFrancoadv]
+
+    def get_queryset(self):
+        queryset = Artigo.objects.all()
+        query = self.request.query_params.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(titulo__icontains=query) | Q(descricao__icontains=query)
+            )
+
+        # Aplica a lógica de ordenação:
+        queryset = queryset.order_by('-fixado', '-data_criacao')
+
+        return queryset
 
 # CMS
 class PaginaInicioViewSet(viewsets.ModelViewSet):

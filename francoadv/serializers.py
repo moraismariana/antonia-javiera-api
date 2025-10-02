@@ -1,6 +1,10 @@
 from rest_framework import serializers
-from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico
+from francoadv.models import PaginaInicio, PaginaSobre, PaginaServicos, ComponenteInsta, ComponenteContato, ComponenteCTA, Servico, Artigo
 
+class ArtigoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Artigo
+        fields = '__all__'
 
 # CMS
 class PaginaInicioSerializer(serializers.ModelSerializer):
