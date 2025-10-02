@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from francoadv.views import PaginaInicioViewSet, PaginaSobreViewSet, PaginaServicosViewSet, ComponenteInstaViewSet, ComponenteContatoViewSet, ComponenteCTAViewSet, ServicoViewSet, FormularioContatoViewSet, UserDetailsView
+from francoadv.views import PaginaInicioViewSet, PaginaSobreViewSet, PaginaServicosViewSet, ComponenteInstaViewSet, ComponenteContatoViewSet, ComponenteCTAViewSet, ServicoViewSet, FormularioContatoViewSet, UserDetailsView, ArtigoViewSet
 
 router_francoadv = routers.DefaultRouter()
 
@@ -13,6 +13,7 @@ router_francoadv.register('componentecontato', ComponenteContatoViewSet, basenam
 router_francoadv.register('componentecta', ComponenteCTAViewSet, basename='componentecta')
 router_francoadv.register('servicos', ServicoViewSet, basename='servicos')
 router_francoadv.register('contato', FormularioContatoViewSet, basename='contato')
+router_francoadv.register('artigos', ArtigoViewSet, basename='artigos')
 
 urlpatterns = [
     path('', include(router_francoadv.urls)),
