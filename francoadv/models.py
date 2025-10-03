@@ -10,6 +10,7 @@ class Artigo(models.Model):
     conteudo = models.TextField(verbose_name='Conteúdo do Artigo (Quill.js)')
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name='Data de Criação')
     data_atualizacao = models.DateTimeField(auto_now=True, verbose_name='Data de Atualização')
+    banner = models.ImageField(upload_to='francoadv/blog', null=True, blank=True)
 
     def __str__(self):
         return self.titulo
