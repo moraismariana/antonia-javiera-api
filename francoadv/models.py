@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from francoadv.mixins import DeleteOldImageMixin
 
 # Classe para artigos do blog
-class Artigo(models.Model):
+class Artigo(DeleteOldImageMixin, models.Model):
     titulo = models.CharField(max_length=200, verbose_name='Título')
     descricao = models.TextField(verbose_name='Descrição')
     fixado = models.BooleanField(default=False, verbose_name='Fixado')
