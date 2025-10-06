@@ -47,7 +47,7 @@ class ArtigoViewSet(viewsets.ModelViewSet):
     serializer_class = ArtigoSerializer
     pagination_class = PageNumberPagination
     PageNumberPagination.page_size = 10
-    permission_classes = [IsAuthenticatedOrReadOnly, PermissaoFrancoadv]
+    permission_classes = [PermissaoFrancoadv]
 
     def get_queryset(self):
         queryset = Artigo.objects.all()
