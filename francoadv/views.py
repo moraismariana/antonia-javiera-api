@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
 
@@ -102,7 +102,7 @@ class ServicoViewSet(viewsets.ModelViewSet):
 # Formulário contato
 class FormularioContatoViewSet(viewsets.ViewSet):
     serializer_class = FormularioContatoSerializer
-    permission_classes = [PermissaoFrancoadv]
+    permission_classes = [AllowAny]
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)

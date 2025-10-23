@@ -3,6 +3,8 @@ from rest_framework import routers
 
 from francoadv.views import PaginaInicioViewSet, PaginaSobreViewSet, PaginaServicosViewSet, ComponenteInstaViewSet, ComponenteContatoViewSet, ComponenteCTAViewSet, ServicoViewSet, FormularioContatoViewSet, UserDetailsView, ArtigoViewSet
 
+app_name = 'francoadv'
+
 router_francoadv = routers.DefaultRouter()
 
 router_francoadv.register('paginainicio', PaginaInicioViewSet, basename='paginainicio')

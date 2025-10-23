@@ -18,6 +18,35 @@ class Artigo(models.Model):
         verbose_name = 'Artigo'
         verbose_name_plural = 'Artigos'
 
+# Classe para cursos e aulas
+class Curso(DeleteOldImageMixin, models.Model):
+    nome = models.CharField(max_length=200, verbose_name='Título')
+    descricao = models.TextField(verbose_name='Descrição')
+    banner = models.ImageField(upload_to='javiera/cursos', null=True, blank=True)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'Curso'
+        verbose_name_plural = 'Cursos'
+
+class Aula(DeleteOldImageMixin, models.Model):
+    curso = models.ForeignKey(Curso, related_name='aulas', on_delete=models.CASCADE, verbose_name='Curso')
+    titulo = models.CharField(max_length=300, verbose_name='Título')
+    descricao = models.TextField(verbose_name='Descrição')
+    conteudo = models.TextField(verbose_name='Conteúdo do Artigo (Quill.js)')
+    data_criacao = models.DateTimeField(auto_now_add=True, verbose_name='Data de Criação')
+    data_atualizacao = models.DateTimeField(auto_now=True, verbose_name='Data de Atualização')
+    banner = models.ImageField(upload_to='javiera/aulas', null=True, blank=True)
+
+    def __str__(self):
+        return self.titulo
+
+    class Meta:
+        verbose_name = 'Aula'
+        verbose_name_plural = 'Aulas'
+
 # Classes para edição de conteúdo CMS
 class SingletonModel(models.Model):
     """Classe abstrata para garantir que apenas uma instância do modelo exista."""
